@@ -9,6 +9,9 @@ export const TextAnimationRAF = ({
 	let rafId = -1;
 	const textAnimation = () => {
 		if (idx >= textArr.length) {
+			const cursor = document.createElement("span");
+			cursor.setAttribute("class", "cursor");
+			elem.appendChild(cursor);
 			cancelAnimationFrame(rafId);
 			return;
 		}
@@ -18,7 +21,6 @@ export const TextAnimationRAF = ({
 			idx++;
 		}
 		rafId = requestAnimationFrame(textAnimation);
-		console.log({ rafId });
 	};
 	textAnimation();
 

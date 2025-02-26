@@ -4,7 +4,7 @@ import OpeningPage from "@pages/openingPage";
 
 export const router = createBrowserRouter([
 	{
-		path: "opening",
+		path: "/",
 		children: [
 			{
 				index: true,
