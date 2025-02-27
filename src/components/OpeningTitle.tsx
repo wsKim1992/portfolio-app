@@ -1,9 +1,13 @@
-import { type FC, useEffect, useRef, useState } from "react";
+import { type FC, useEffect, useRef } from "react";
+
+import { useNavigate } from "react-router-dom";
 
 import { Box } from "@radix-ui/themes";
 import { keyframes, styled } from "@stitches/react";
 
 import { TextAnimationRAF } from "@utils/OpeningPage";
+
+import { pathObj } from "@constants/router";
 
 import Button from "@components/Button";
 
@@ -37,6 +41,7 @@ type OpeningTitleProps = {
 };
 
 const OpeningTitle: FC<OpeningTitleProps> = ({ text }) => {
+	const navigate = useNavigate();
 	const textRef = useRef<HTMLDivElement | null>(null);
 	useEffect(() => {
 		if (textRef.current) {
@@ -49,6 +54,10 @@ const OpeningTitle: FC<OpeningTitleProps> = ({ text }) => {
 			};
 		}
 	}, []);
+
+	const handleClickButton = () => {
+		navigate(pathObj.main);
+	};
 
 	return (
 		<Box
@@ -63,11 +72,13 @@ const OpeningTitle: FC<OpeningTitleProps> = ({ text }) => {
 			<IntroTextBox ref={textRef} />
 			<Button
 				text="Enter"
-				handleClick={() => {}}
+				handleClick={handleClickButton}
 				css={{
 					width: "250px",
 					background: "rgb(35,57,116)",
 					marginTop: "50px",
+					padding: "25px 20px",
+					boxSizing: "border-box",
 				}}
 			/>
 		</Box>

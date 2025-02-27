@@ -1,5 +1,49 @@
-import { Box, Button } from "@radix-ui/themes";
+import { Box, Button, Flex, TabNav } from "@radix-ui/themes";
 import { keyframes, styled } from "@stitches/react";
+
+export const SubNavAppear = keyframes({
+	"0%": {
+		opacity: "0",
+		transform: "translateY(-10px)",
+	},
+	"100%": {
+		opacity: "1",
+		transform: "translateY(0px)",
+	},
+});
+
+export const MainPageLayout = styled(Box, {
+	width: "100dvw",
+	height: "100dvh",
+	overflowX: "hidden",
+	overflowY: "auto",
+	background: "#0A192F",
+});
+
+export const Navigation = styled(Flex, {
+	width: "100%",
+	padding: "15.5px",
+	flexDirection: "row",
+	alignItems: "center",
+	justifyContent: "space-between",
+	boxSizing: "border-box",
+	background: "#112240",
+});
+
+export const TabNavElem = styled(TabNav.Link, {
+	fontSize: "15.5px",
+	fontWeight: "500",
+	transition: "color 0.35s",
+	color: "#fff",
+	padding: "10px",
+	cursor: "pointer",
+	opacity: "0",
+	animationFillMode: "both",
+	animation: `${SubNavAppear} 0.5s ease-out forwards`,
+	"&:hover": {
+		color: "#3A86FF",
+	},
+});
 
 export const BackgrounContainer = styled(Box, {
 	backgroundImage: "url(/src/assets/img/code.png)",
@@ -55,7 +99,7 @@ export const HashTagContainer = styled(Box, {
 	fontWeight: "bold",
 	backgroundColor: "linear-gradient(45deg,rgb(108, 227, 255), #FF8C00)",
 	backgroundClip: "text",
-	animation: `${LoadHashTag} 0.5s 1`,
+	animation: `${LoadHashTag} 1.8s 1 both`,
 	"-webkit-text-fill-color": "#fff",
 	"&::before": {
 		content: '""',
