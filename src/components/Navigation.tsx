@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import { HomeIcon } from "@radix-ui/react-icons";
 import { Box, TabNav, Text } from "@radix-ui/themes";
@@ -10,6 +10,8 @@ import { subNavObj } from "@constants/router";
 import { Navigation, TabNavElem } from "@components/Common.style";
 
 const SubPageNavi = () => {
+	const navigate = useNavigate();
+	const { hash } = useLocation();
 	return (
 		<Navigation css={{ width: "fit-content", padding: "0px" }}>
 			<TabNav.Root>
@@ -20,7 +22,19 @@ const SubPageNavi = () => {
 								animationDelay: `${idx * 100}ms`,
 							}}
 							key={key}
-							href={subNavObj[key].link}
+							href={`${subNavObj[key].link}`}
+							onClick={evt => {
+								evt.preventDefault();
+								evt.stopPropagation();
+								if (hash === subNavObj[key].link) {
+									navigate("");
+									setTimeout(() => {
+										navigate(subNavObj[key].link);
+									}, 10);
+								} else {
+									navigate(subNavObj[key].link);
+								}
+							}}
 						>
 							{subNavObj[key].text}
 						</TabNavElem>

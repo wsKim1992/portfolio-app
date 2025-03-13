@@ -13,5 +13,5 @@ export const omit = <T extends object>({
 };
 
 export const isSubNavKey = (str: string): str is keyof TSubNav => {
-	return ["intro", "experience", "techStacks", "projects"].includes(str);
+	return ["intro", "experiences", "techStacks", "projects"].includes(str);
 };

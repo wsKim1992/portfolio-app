@@ -116,6 +116,8 @@ export const MainPageLayout = styled(Box, {
 });
 
 export const Navigation = styled(Flex, {
+	position: "sticky",
+	top: "0px",
 	width: "100%",
 	padding: "15.5px",
 	flexDirection: "row",
@@ -123,6 +125,7 @@ export const Navigation = styled(Flex, {
 	justifyContent: "space-between",
 	boxSizing: "border-box",
 	background: "#112240",
+	zIndex: "100",
 });
 
 export const TabNavElem = styled(TabNav.Link, {
