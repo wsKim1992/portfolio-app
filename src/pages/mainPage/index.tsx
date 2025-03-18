@@ -1,4 +1,4 @@
-import { createRef, useEffect } from "react";
+import { createRef, useEffect, useRef } from "react";
 
 import { useLocation } from "react-router-dom";
 
@@ -12,6 +12,10 @@ import {
 	NotionLogoIcon,
 } from "@radix-ui/react-icons";
 import { Flex } from "@radix-ui/themes";
+
+import { useCommonStore } from "@stores/CommonStore";
+
+import { introObserverFactory } from "@utils/MainPage";
 
 import { MainPageLayout } from "@components/Common.style";
 import Cover from "@components/Cover";
@@ -51,11 +55,31 @@ const Links = () => {
 };
 
 const MainPage = () => {
+	const setIntroElemObserver = useCommonStore(
+		state => state.setIntroElemObserver
+	);
+	const initIntroElemObserver = useCommonStore(
+		state => state.initIntroElemObserver
+	);
+
+	const wrapperElemRef = useRef<HTMLDivElement | null>(null);
 	const introPageRef = createRef<{ scrollWithIn: () => void }>();
 	const expPageRef = createRef<{ scrollWithIn: () => void }>();
 	const techStacksRef = createRef<{ scrollWithIn: () => void }>();
 	const projectsRef = createRef<{ scrollWithIn: () => void }>();
 	const { hash } = useLocation();
+
+	useEffect(() => {
+		if (wrapperElemRef.current) {
+			setIntroElemObserver(
+				introObserverFactory({ rootElem: wrapperElemRef.current })
+			);
+		}
+		return () => {
+			initIntroElemObserver();
+		};
+	}, []);
+
 	useEffect(() => {
 		if (introPageRef.current && hash === "#intro") {
 			introPageRef.current.scrollWithIn();
@@ -68,14 +92,14 @@ const MainPage = () => {
 		}
 	}, [hash]);
 	return (
-		<MainPageLayout>
+		<MainPageLayout ref={wrapperElemRef}>
 			<NavigationComponent />
 			<Cover />
 			<Links />
 			<SubPageLayout
 				hash="#intro"
 				ref={introPageRef}
-				css={{ overflow: "hidden", background: "orange" }}
+				css={{ overflow: "hidden" }}
 			>
 				<Intro />
 			</SubPageLayout>

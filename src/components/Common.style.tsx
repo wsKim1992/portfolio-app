@@ -1,6 +1,13 @@
 import { Box, Button, Flex, TabNav, Text } from "@radix-ui/themes";
 import { keyframes, styled } from "@stitches/react";
 
+//for intro component
+export const Title = styled(Text, {
+	fontSize: "35.5px",
+	fontWeight: "500",
+	color: "#fff",
+});
+
 //for cover page
 export const BeforIntroText = styled(Text, {
 	fontSize: "35.5px",
