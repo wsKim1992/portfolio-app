@@ -15,6 +15,8 @@ import { useShallow } from "zustand/shallow";
 
 import { useCommonStore } from "@stores/CommonStore";
 
+import { rotateInOrder } from "@utils/MainPage";
+
 import { Title } from "@components/Common.style";
 
 const IntroInnerLayout = styled(Box, {
@@ -64,12 +66,19 @@ const IntroBoxContext = createContext<TIntroBoxContext>({
 
 const HighlightedText: FC<{ children: ReactNode }> = ({ children }) => {
 	const { isHovered } = useContext<TIntroBoxContext>(IntroBoxContext);
+	const ref = useRef<HTMLElement | null>(null);
+	useEffect(() => {
+		if (ref.current && isHovered) {
+			rotateInOrder(ref.current);
+		}
+	}, [isHovered]);
 	return (
-		<Highlighted>
+		<Highlighted ref={ref}>
 			{typeof children === "string"
 				? children.split("").map((c, idx) => (
 						<Text
 							as={"span"}
+							className="highlighted-char"
 							key={`${c}_${idx}`}
 							style={{
 								display: "inline-block",
