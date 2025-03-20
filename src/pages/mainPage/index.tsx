@@ -99,7 +99,11 @@ const MainPage = () => {
 			<SubPageLayout
 				hash="#intro"
 				ref={introPageRef}
-				css={{ overflow: "hidden" }}
+				css={{
+					overflow: "hidden",
+					height: "fit-content",
+					paddingBottom: "45px",
+				}}
 			>
 				<Intro />
 			</SubPageLayout>

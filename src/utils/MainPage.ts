@@ -11,7 +11,7 @@ export const observerFactory = ({
 };
 
 const roundUpNumByTwo = (num: number) => {
-	return Math.round(num * 100) / 100;
+	return Math.round(num * 10) / 10;
 };
 
 export const scrollHandlerFactory = ({
@@ -31,7 +31,7 @@ export const scrollHandlerFactory = ({
 			introBoxs.forEach(introElem => {
 				const { top: thisTop } = introElem.getBoundingClientRect();
 				const scaleVal: number =
-					roundUpNumByTwo(scrollTop / thisTop) >= 1
+					roundUpNumByTwo(scrollTop / thisTop) >= 0.85
 						? 1
 						: scrollTop / thisTop;
 				(introElem as HTMLElement).style.setProperty(
