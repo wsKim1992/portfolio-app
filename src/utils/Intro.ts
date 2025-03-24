@@ -2,7 +2,7 @@ const rotateAnimation = (spans: NodeListOf<Element>) => {
 	let idx = 0;
 	let rafIdx = -1;
 	const animationCb = () => {
-		if (idx <= spans.length) {
+		if (idx <= spans.length && spans[idx]) {
 			(spans[idx] as HTMLElement).style.setProperty(
 				"transform",
 				"rotateY(360deg)"

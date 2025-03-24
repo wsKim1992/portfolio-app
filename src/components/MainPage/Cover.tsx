@@ -1,5 +1,3 @@
-import { type FC } from "react";
-
 import { Box, Flex, Text } from "@radix-ui/themes";
 
 import {
@@ -15,6 +13,7 @@ export const SubText = () => {
 	return (
 		<Box>
 			<Text
+				asChild
 				style={{
 					fontSize: "22.5px",
 					fontWeight: "600",
@@ -25,12 +24,14 @@ export const SubText = () => {
 					animationFillMode: "both",
 				}}
 			>
-				4년동안 Front End 개발자로서 업무를 수행하며,
-				<br />
-				최적의 User Experience 를 제공하는
-				<br /> 안정적이고 최적화된 Front End Application을
-				<br />
-				만들어 왔습니다.
+				<article>
+					4년동안 Front End 개발자로서 업무를 수행하며,
+					<br />
+					최적의 User Experience 를 제공하는
+					<br /> 안정적이고 최적화된 Front End Application을
+					<br />
+					만들어 왔습니다.
+				</article>
 			</Text>
 		</Box>
 	);
@@ -109,16 +110,20 @@ const Greeting = () => {
 				animationDelay: "1.3s",
 				animationDuration: "1.5s",
 				animationFillMode: "both",
+				margin: "0px",
 			}}
+			asChild
 		>
-			<GreetingText as={"span"}>Front End 개발자 </GreetingText>
-			<GreetingText
-				css={{
-					color: "rgb(100, 255, 218)",
-				}}
-			>
-				김우석 입니다
-			</GreetingText>
+			<h1>
+				<GreetingText as={"span"}>Front End 개발자 </GreetingText>
+				<GreetingText
+					css={{
+						color: "rgb(100, 255, 218)",
+					}}
+				>
+					김우석 입니다
+				</GreetingText>
+			</h1>
 		</Box>
 	);
 };
@@ -147,6 +152,7 @@ const TextBox = () => {
 const Cover = () => {
 	return (
 		<MainPageLayout
+			asChild
 			css={{
 				background:
 					"radial-gradient(circle, #3A86FF 0%, #0A192F 70%), url(/src/assets/img/image.png)",
@@ -155,7 +161,9 @@ const Cover = () => {
 				backgroundRepeat: "no-repeat",
 			}}
 		>
-			<TextBox />
+			<section>
+				<TextBox />
+			</section>
 		</MainPageLayout>
 	);
 };

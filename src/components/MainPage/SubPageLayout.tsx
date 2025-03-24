@@ -28,8 +28,8 @@ const SubPageLayout = forwardRef<
 		},
 	}));
 	return (
-		<MainPageLayout ref={divRef} css={css}>
-			{children}
+		<MainPageLayout asChild ref={divRef} css={css}>
+			<section>{children}</section>
 		</MainPageLayout>
 	);
 });

@@ -84,6 +84,7 @@ const IntroBox: FC<{ subtitle: string; text: ReactNode }> = ({
 			}}
 		>
 			<Title
+				as="h3"
 				css={{
 					color: "inherit",
 					fontSize: "1.5rem",
@@ -93,7 +94,7 @@ const IntroBox: FC<{ subtitle: string; text: ReactNode }> = ({
 				{subtitle}
 			</Title>
 			<IntroBoxContext.Provider value={{ isHovered }}>
-				<IntroTextBox>{text}</IntroTextBox>
+				<IntroTextBox as="article">{text}</IntroTextBox>
 			</IntroBoxContext.Provider>
 		</IntroBoxElem>
 	);

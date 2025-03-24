@@ -55,42 +55,44 @@ const MainPage = () => {
 		}
 	}, [hash]);
 	return (
-		<MainPageLayout ref={wrapperElemRef}>
-			<NavigationComponent />
-			<Cover />
-			<Links />
-			<SubPageLayout
-				hash="#intro"
-				ref={introPageRef}
-				css={{
-					overflow: "hidden",
-					height: "fit-content",
-					paddingBottom: "45px",
-				}}
-			>
-				<Intro />
-			</SubPageLayout>
-			<SubPageLayout
-				hash="#experiences"
-				ref={expPageRef}
-				css={{ overflow: "hidden", background: "red" }}
-			>
-				<Experiences />
-			</SubPageLayout>
-			<SubPageLayout
-				hash="#tech-stacks"
-				ref={techStacksRef}
-				css={{ overflow: "hidden" }}
-			>
-				<TechStacks />
-			</SubPageLayout>
-			<SubPageLayout
-				ref={projectsRef}
-				hash="#projects"
-				css={{ overflow: "hidden" }}
-			>
-				<Projects />
-			</SubPageLayout>
+		<MainPageLayout asChild ref={wrapperElemRef}>
+			<main>
+				<NavigationComponent />
+				<Cover />
+				<Links />
+				<SubPageLayout
+					hash="#intro"
+					ref={introPageRef}
+					css={{
+						overflow: "hidden",
+						height: "fit-content",
+						paddingBottom: "45px",
+					}}
+				>
+					<Intro />
+				</SubPageLayout>
+				<SubPageLayout
+					hash="#experiences"
+					ref={expPageRef}
+					css={{ overflow: "hidden", background: "red" }}
+				>
+					<Experiences />
+				</SubPageLayout>
+				<SubPageLayout
+					hash="#tech-stacks"
+					ref={techStacksRef}
+					css={{ overflow: "hidden" }}
+				>
+					<TechStacks />
+				</SubPageLayout>
+				<SubPageLayout
+					ref={projectsRef}
+					hash="#projects"
+					css={{ overflow: "hidden" }}
+				>
+					<Projects />
+				</SubPageLayout>
+			</main>
 		</MainPageLayout>
 	);
 };

@@ -61,6 +61,7 @@ const OpeningTitle: FC<OpeningTitleProps> = ({ text }) => {
 
 	return (
 		<Box
+			asChild
 			style={{
 				position: "absolute",
 				top: "10%",
@@ -69,18 +70,22 @@ const OpeningTitle: FC<OpeningTitleProps> = ({ text }) => {
 				whiteSpace: "nowrap",
 			}}
 		>
-			<IntroTextBox ref={textRef} />
-			<Button
-				text="Enter"
-				handleClick={handleClickButton}
-				css={{
-					width: "250px",
-					background: "rgb(35,57,116)",
-					marginTop: "50px",
-					padding: "25px 20px",
-					boxSizing: "border-box",
-				}}
-			/>
+			<section>
+				<IntroTextBox asChild ref={textRef}>
+					<h1 ref={textRef} />
+				</IntroTextBox>
+				<Button
+					text="Enter"
+					handleClick={handleClickButton}
+					css={{
+						width: "250px",
+						background: "rgb(35,57,116)",
+						marginTop: "50px",
+						padding: "25px 20px",
+						boxSizing: "border-box",
+					}}
+				/>
+			</section>
 		</Box>
 	);
 };
