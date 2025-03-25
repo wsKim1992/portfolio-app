@@ -10,8 +10,8 @@ export const observerFactory = ({
 	return new IntersectionObserver(cb, options);
 };
 
-const roundUpNumByTwo = (num: number) => {
-	return Math.round(num * 10) / 10;
+const roundUpNum = (num: number) => {
+	return Math.round(num);
 };
 
 export const scrollHandlerFactory = ({
@@ -31,12 +31,12 @@ export const scrollHandlerFactory = ({
 			introBoxs.forEach(introElem => {
 				const { top: thisTop } = introElem.getBoundingClientRect();
 				const scaleVal: number =
-					roundUpNumByTwo(scrollTop / thisTop) >= 0.85
+					roundUpNum(scrollTop / thisTop) >= 0.85
 						? 1
 						: scrollTop / thisTop;
 				(introElem as HTMLElement).style.setProperty(
 					"transform",
-					`scale(${roundUpNumByTwo(scaleVal)},${scaleVal})`
+					`scale(${scaleVal},${scaleVal})`
 				);
 			});
 		}
