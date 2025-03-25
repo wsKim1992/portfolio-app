@@ -29,7 +29,7 @@ const LinkComponent: FC<LinkComponentProps> = ({ link, Icon }) => {
 					style={{
 						width: "25.5px",
 						height: "25.5px",
-						color: "rgb(100, 255, 218)",
+						color: "var(--color-base-secondary)",
 					}}
 				/>
 				<Text

@@ -13,7 +13,14 @@ const SubPageNavi = () => {
 	const navigate = useNavigate();
 	const { hash } = useLocation();
 	return (
-		<Navigation asChild css={{ width: "fit-content", padding: "0px" }}>
+		<Navigation
+			asChild
+			css={{
+				width: "fit-content",
+				padding: "0px",
+				background: "transparent",
+			}}
+		>
 			<nav>
 				<TabNav.Root>
 					{Object.keys(subNavObj).map((key, idx) =>

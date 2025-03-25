@@ -13,21 +13,21 @@ export const IntroBoxElem = styled(Box, {
 	height: "fit-content",
 	padding: "20px",
 	boxSizing: "border-box",
-	background: "rgb(58, 134, 255)",
+	background: "var(--color-base-primary)",
 	borderRadius: "1rem",
 	cursor: "pointer",
 	color: "#fff",
 	transition: "background 0.55s ease-in",
 	"&:hover": {
-		background: "rgb(100, 255, 218)",
-		color: "rgb(0,0,0)",
+		background: "var(--color-base-secondary)",
+		color: "var(--color-base-text)",
 	},
 });
 
 export const Highlighted = styled(Text, {
 	fontSize: "inherit",
 	fontWeight: "600",
-	color: "rgb(100, 255, 218)",
+	color: "var( --color-base-secondary)",
 	overflow: "hidden",
 });
 

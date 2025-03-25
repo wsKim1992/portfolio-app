@@ -25,7 +25,7 @@ const CursorBlinking = keyframes({
 const IntroTextBox = styled(Box, {
 	fontSize: "65.5px",
 	fontWeight: "500",
-	color: "#fff",
+	color: "var(--color-base-background)",
 	".cursor": {
 		margin: "2.5px 10px",
 		display: "inline-block",
@@ -79,7 +79,7 @@ const OpeningTitle: FC<OpeningTitleProps> = ({ text }) => {
 					handleClick={handleClickButton}
 					css={{
 						width: "250px",
-						background: "rgb(35,57,116)",
+						background: "var(--color-base-primary)",
 						marginTop: "50px",
 						padding: "25px 20px",
 						boxSizing: "border-box",

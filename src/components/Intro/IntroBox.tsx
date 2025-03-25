@@ -17,7 +17,7 @@ import {
 	Highlighted,
 	IntroBoxElem,
 	IntroTextBox,
-} from "@components/Intro/Common.styls";
+} from "@components/Intro/Common.styles";
 
 type TIntroBoxContext = {
 	isHovered: boolean;

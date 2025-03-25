@@ -27,7 +27,7 @@ const Comments = () => {
 						1. 편리하게 유지 보수 할 수 있고, &nbsp; 반복성이
 						최소화된{" "}
 						<HighlightedText>Clean Architecture</HighlightedText>
-						형태를 갖춘 CodeBase 형태를 지향합니다. 모듈간의
+						형태를 갖춘 CodeBase 형태를 지향합니다. 모듈간의{" "}
 						<HighlightedText> 관심사 분리</HighlightedText>와
 						<HighlightedText>추상화 (Abstraction)</HighlightedText>{" "}
 						과정을 통해 <HighlightedText>유연성</HighlightedText>과{" "}

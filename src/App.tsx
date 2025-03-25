@@ -6,6 +6,8 @@ import "@radix-ui/themes/styles.css";
 
 import { router } from "@constants/router";
 
+import "@assets/css/variables.css";
+
 function App() {
 	return (
 		<Theme>

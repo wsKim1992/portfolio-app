@@ -5,20 +5,20 @@ import { keyframes, styled } from "@stitches/react";
 export const Title = styled(Text, {
 	fontSize: "35.5px",
 	fontWeight: "500",
-	color: "#fff",
+	color: "var(--color-base-background)",
 });
 
 //for cover page
 export const BeforIntroText = styled(Text, {
 	fontSize: "35.5px",
 	fontWeight: "500",
-	color: "#fff",
+	color: "var(--color-base-background)",
 });
 
 export const GreetingText = styled(Text, {
 	fontSize: "55.5px",
 	fontWeight: "600",
-	color: "#fff",
+	color: "var(--color-base-background)",
 });
 
 export const BeforIntroAnimation = keyframes({
@@ -38,7 +38,7 @@ export const HighlightTextAnimation = keyframes({
 		transform: "scaleX(0.0)",
 	},
 	"100%": {
-		color: "rgb(100, 255, 218)",
+		color: "var(--color-base-secondary)",
 		transform: "scaleX(1.0)",
 	},
 });
@@ -61,7 +61,7 @@ export const LinkWrapper = styled(Box, {
 	height: "65px",
 	borderRadius: "32.5px",
 	boxSizing: "border-box",
-	background: "rgb(58, 134, 255)",
+	background: "var(--color-base-primary)",
 	transition: "background 0.65s ease-out",
 	color: "#fff",
 	cursor: "pointer",
@@ -70,7 +70,7 @@ export const LinkWrapper = styled(Box, {
 	alignItems: "center",
 	justifyContent: "center",
 	"&:hover": {
-		background: "rgb(100, 255, 218)",
+		background: "var(--color-base-secondary)",
 		".url-link": {
 			transform: "scaleX(1.0)",
 			opacity: "1",
@@ -93,8 +93,7 @@ export const URLLink = styled(Box, {
 	borderRadius: "inherit",
 	fontSize: "19.5px",
 	fontWeight: "bold",
-	border: "3px solid rgb(100, 255, 218)",
-	background: "transparent",
+	border: "3px solid var(--color-base-secondary)",
 	color: "#fff",
 	transition: "transform 0.65s ease-out",
 	transform: "scaleX(0.0)",
@@ -119,7 +118,7 @@ export const MainPageLayout = styled(Box, {
 	height: "100dvh",
 	overflowX: "hidden",
 	overflowY: "auto",
-	background: "#0A192F",
+	background: "var(--color-dark-primary)",
 });
 
 export const Navigation = styled(Flex, {
@@ -131,7 +130,8 @@ export const Navigation = styled(Flex, {
 	alignItems: "center",
 	justifyContent: "space-between",
 	boxSizing: "border-box",
-	background: "#112240",
+	background:
+		"linear-gradient(45deg,var(--color-dark-primary), var(--color-base-primary))",
 	zIndex: "100",
 });
 
@@ -139,14 +139,16 @@ export const TabNavElem = styled(TabNav.Link, {
 	fontSize: "15.5px",
 	fontWeight: "500",
 	transition: "color 0.35s",
-	color: "#fff",
+	color: "var(--color-base-background)",
 	padding: "10px",
-	cursor: "pointer",
 	opacity: "0",
 	animationFillMode: "both",
+	cursor: "pointer",
+	background: "transparent",
 	animation: `${SubNavAppear} 0.5s ease-out forwards`,
 	"&:hover": {
-		color: "#3A86FF",
+		background: "transparent",
+		color: "var(--color-base-secondary)",
 	},
 });
 
@@ -172,11 +174,11 @@ export const StyledButton = styled(Button, {
 	fontSize: "21.5px",
 	fontWeight: "400",
 	borderRadius: "5.5px",
-	background: "rgb(119, 190, 211)",
-	color: "#fff",
+	background: "var(--color-base-secondary)",
 	transform: "background 0.55s",
+	color: "var(--color-base-background)",
 	"&:hover": {
-		background: "rgb(5, 8, 39)",
+		background: "var(--color-base-secondary)",
 	},
 	cursor: "pointer",
 });
@@ -202,7 +204,8 @@ export const HashTagContainer = styled(Box, {
 	zIndex: 1,
 	fontSize: "22.5px",
 	fontWeight: "bold",
-	backgroundColor: "linear-gradient(45deg,rgb(108, 227, 255), #FF8C00)",
+	backgroundColor:
+		"linear-gradient(45deg,var(--color-base-secondary), var(--color-base-background))",
 	backgroundClip: "text",
 	animation: `${LoadHashTag} 1.8s 1 both`,
 	"-webkit-text-fill-color": "#fff",
@@ -214,7 +217,8 @@ export const HashTagContainer = styled(Box, {
 		right: "-5px",
 		bottom: "-5px",
 		borderRadius: "30.5px",
-		background: "linear-gradient(45deg, rgb(180, 210, 255), #FF8C00)",
+		background:
+			"linear-gradient(45deg, var(--color-base-secondary), var(--color-base-background))",
 		zIndex: -1,
 	},
 	"&::after": {
@@ -225,7 +229,7 @@ export const HashTagContainer = styled(Box, {
 		right: "0",
 		bottom: "0",
 		borderRadius: "25.5px",
-		background: "rgb(35,57,116)",
+		background: "var(--color-base-primary)",
 		zIndex: -1,
 	},
 });

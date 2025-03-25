@@ -1,0 +1,39 @@
+# colors:
+#     primary:
+#         base: "rgb(58, 134, 255)"
+#         light: "rgba(58, 134, 255, 0.1)"
+#         dark: "rgb(48, 114, 225)"
+#     secondary:
+#         base: "rgb(34, 193, 195)"
+#         light: "rgba(34, 193, 195, 0.1)"
+#         dark: "rgb(30, 170, 172)"
+#     background:
+#         base: "#f5f7fa"
+#     text:
+#         base: "#333"
+#         light: "rgba(51, 51, 51, 0.7)"
+#     border:
+#         base: "rgba(0, 0, 0, 0.1)"
+color:
+    base:
+        primary:
+            value: "rgb(58, 134, 255)"
+            type: "color"
+        secondary:
+            value: "rgb(34, 193, 195)"
+            type: "color"
+        background:
+            value: "#f5f7fa"
+            type: "color"
+        text:
+            value: "#333"
+            type: "color"
+        border:
+            value: "rgba(0, 0, 0, 0.1)"
+    dark:
+        primary:
+            value: "#112240"
+            type: "color"
+        secondary:
+            value: "rgba(34, 193, 195, 0.1)"
+            type: "color"

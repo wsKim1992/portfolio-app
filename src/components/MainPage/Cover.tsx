@@ -17,7 +17,7 @@ export const SubText = () => {
 				style={{
 					fontSize: "22.5px",
 					fontWeight: "600",
-					color: "#fff",
+					color: "var(--color-base-background)",
 					animationName: `${GreetingTextAnimation}`,
 					animationDelay: "1.75s",
 					animationDuration: "1.5s",
@@ -52,7 +52,7 @@ const BeforIntro = () => {
 						style={{
 							fontSize: "28.8px",
 							fontWeight: "500",
-							color: "rgb(100, 255, 218)",
+							color: "var(--color-base-secondary)",
 							animationName: `${BeforIntroAnimation}`,
 							animationDelay:
 								delay < 10 ? `0.${delay}s` : `${delay / 10}s`,

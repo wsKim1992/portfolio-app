@@ -6,7 +6,7 @@ import { useCommonStore } from "@stores/CommonStore";
 
 import { Title } from "@components/Common.style";
 import Comments from "@components/Intro/Comments";
-import { IntroInnerLayout, TextFlexBox } from "@components/Intro/Common.styls";
+import { IntroInnerLayout, TextFlexBox } from "@components/Intro/Common.styles";
 
 export const Intro = memo(() => {
 	const elemRef = useRef<HTMLDivElement | null>(null);
