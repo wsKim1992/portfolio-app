@@ -153,7 +153,7 @@ export const TabNavElem = styled(TabNav.Link, {
 });
 
 export const BackgrounContainer = styled(Box, {
-	backgroundImage: "url(/src/assets/img/code.png)",
+	backgroundImage: "url(/static/img/code.png)",
 	backgroundSize: "cover",
 	backgroundPosition: "center",
 	backgroundRepeat: "no-repeat",
