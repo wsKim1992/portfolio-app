@@ -74,7 +74,7 @@ const MainPage = () => {
 				<SubPageLayout
 					hash="#experiences"
 					ref={expPageRef}
-					css={{ overflow: "hidden", background: "red" }}
+					css={{ height: "fit-content" }}
 				>
 					<Experiences />
 				</SubPageLayout>
