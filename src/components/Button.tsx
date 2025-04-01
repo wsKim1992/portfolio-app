@@ -7,7 +7,7 @@ import { StyledButton } from "@components/Common.style";
 type ButtonProps = {
 	text: string;
 	css?: CSS;
-	handleClick: () => void;
+	handleClick?: () => void;
 };
 
 const Button: FC<ButtonProps> = ({ text, css, handleClick }) => {

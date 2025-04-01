@@ -11,3 +11,102 @@
 	--color-dark-primary: #112240;
 	--color-dark-secondary: #22c1c31a;
 }
+
+/* 기본 스타일 초기화 */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	font-family: sans-serif;
+	background-color: #f9fafb;
+	color: #111;
+	line-height: 1.5;
+}
+
+/* 기본 텍스트 스타일 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: bold;
+	margin: 0;
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+p {
+	font-size: 1rem;
+	margin-bottom: 1rem;
+	color: #333;
+}
+
+ul {
+	list-style-type: disc;
+	padding-left: 1.5rem;
+	margin-bottom: 1rem;
+}
+
+li {
+	margin-bottom: 0.5rem;
+}
+button::focused {
+	border: none;
+	outline: none;
+}
+/* Radix UI 스타일 */
+[data-state="open"] {
+	animation: fadeIn 0.2s ease-out;
+}
+
+[data-state="closed"] {
+	animation: fadeOut 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+/* Dialog (모달) 스타일 */
+.radix-dialog-overlay {
+	background: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	inset: 0;
+}
+
+.radix-dialog-content {
+	background: white;
+	border-radius: 8px;
+	padding: 20px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Tooltip 스타일 */
+.radix-tooltip {
+	background: black;
+	color: white;
+	padding: 4px 8px;
+	border-radius: 4px;
+	font-size: 12px;
+}

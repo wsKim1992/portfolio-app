@@ -1,23 +1,21 @@
 import { useEffect, useRef } from "react";
 
-import {
-	convertStrIntoDateFormat,
-	setSliderAnimation,
-} from "@utils/Experiences";
+import { Dialog } from "@radix-ui/themes";
 
-import Button from "@components/Button";
+import { setSliderAnimation } from "@utils/Experiences";
+
 import { Title } from "@components/Common.style";
 import {
 	BriefInfoFlex,
 	BriefInfoTitle,
 	ContributionBox,
 	ContributionLI,
-	DateRange,
-	DateStr,
 	DescripttionBox,
 	Domain,
 	DomainBox,
 	InnerDomainBox,
+	ModalButton,
+	ModalRoot,
 	ProjectBox,
 	ProjectCard,
 	ProjectCardSlider,
@@ -27,6 +25,8 @@ import {
 	ProjectInner,
 	ProjectTitle,
 } from "@components/experiences/Common.style";
+import DateRangeComponent from "@components/experiences/DateRangeComponent";
+import DetailDialogContent from "@components/experiences/DetailDialog";
 
 import TCTPaSSImg0 from "@assets/img/project/TCP_Pass_0.png";
 
@@ -35,15 +35,10 @@ const DomainComponent = () => {
 	const innerRef = useRef<HTMLDivElement | null>(null);
 	useEffect(() => {
 		if (outerRef.current && innerRef.current) {
-			const outerWidth = outerRef.current.getBoundingClientRect().width;
-			const innerWidth = innerRef.current.getBoundingClientRect().width;
-
-			if (outerWidth < innerWidth) {
-				setSliderAnimation({
-					diff: innerWidth - outerWidth,
-					elem: innerRef.current,
-				});
-			}
+			setSliderAnimation({
+				outerElem: outerRef.current,
+				innerElem: innerRef.current,
+			});
 		}
 	}, []);
 	return (
@@ -64,31 +59,7 @@ const Period = () => {
 	return (
 		<BriefInfoFlex>
 			<BriefInfoTitle># 기간</BriefInfoTitle>
-			<DateRange
-				css={{
-					color: "var(--color-base-primary)",
-				}}
-			>
-				<DateStr
-					css={{
-						fontSize: "1.15rem",
-						color: "inherit",
-						border: "unset",
-					}}
-				>
-					{convertStrIntoDateFormat("2024-05-01")}
-				</DateStr>
-				-
-				<DateStr
-					css={{
-						fontSize: "1.15rem",
-						color: "inherit",
-						border: "unset",
-					}}
-				>
-					{convertStrIntoDateFormat("2024.12-02")}
-				</DateStr>
-			</DateRange>
+			<DateRangeComponent startDate="2024-05-01" endDate="2024-12-03" />
 		</BriefInfoFlex>
 	);
 };
@@ -135,15 +106,12 @@ const BriefInfo = () => {
 			<Period />
 			<DomainComponent />
 			<Contribution />
-			<Button
-				text="To Detail"
-				css={{
-					background: "var(--color-base-primary)",
-					width: "100%",
-					borderRadius: "15.5px",
-				}}
-				handleClick={() => {}}
-			/>
+			<ModalRoot>
+				<Dialog.Trigger>
+					<ModalButton>To Detail</ModalButton>
+				</Dialog.Trigger>
+				<DetailDialogContent />
+			</ModalRoot>
 		</ProjectFlipper>
 	);
 };

@@ -180,6 +180,9 @@ export const StyledButton = styled(Button, {
 	"&:hover": {
 		background: "var(--color-base-secondary)",
 	},
+	"&:focus": {
+		outline: "none",
+	},
 	cursor: "pointer",
 });
 

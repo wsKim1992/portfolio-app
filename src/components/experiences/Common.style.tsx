@@ -1,7 +1,7 @@
-import { Box, Flex, Text } from "@radix-ui/themes";
+import { Box, Dialog, Flex, Tabs, Text } from "@radix-ui/themes";
 import { styled } from "@stitches/react";
 
-import { Title } from "@components/Common.style";
+import { StyledButton, Title } from "@components/Common.style";
 
 export const InnerLayout = styled(Box, {
 	width: "1280px",
@@ -227,4 +227,97 @@ export const ContributionLI = styled(Box, {
 	fontSize: "0.85rem",
 	fontWeight: "500",
 	whiteSpace: "pre-wrap",
+});
+
+export const ModalButton = styled(StyledButton, {
+	background: "var(--color-base-primary)",
+	width: "100%",
+	borderRadius: "15.5px",
+	transition: "background 0.65s",
+	"&:hover": {
+		color: "var(--color-base-background)",
+		background:
+			"linear-gradient(to right, var(--color-base-primary), var(--color-base-secondary))",
+	},
+});
+
+export const ModalTitle = styled(Dialog.Title, {
+	display: "flex",
+	flexDirection: "column",
+	gap: "0.55rem",
+	".project-title": {
+		flexShrink: "0px",
+		fontSize: "1.6rem",
+		fontWeight: "500",
+	},
+});
+
+export const ModalRoot = styled(Dialog.Root, {
+	background: "var(--color-base-background)",
+});
+
+export const ModalTitleContentBox = styled(Flex, {
+	width: "100%",
+	flexDirection: "row",
+	alignItems: "center",
+	justifyContent: "start",
+	gap: "0.45rem",
+	".sub-title": {
+		flexShrink: "0",
+		fontSize: "1.2rem",
+		fontWeight: "400",
+	},
+});
+
+export const AttendInfoBox = styled(Flex, {
+	padding: "3.5px",
+	gap: "0.45rem",
+	background:
+		"linear-gradient(#fff,#fff) padding-box , linear-gradient(90deg, #FF9966, #FF5E62) border-box",
+	borderRadius: "15.5px",
+	border: "2px solid transparent",
+	".text": {
+		fontSize: "0.95rem",
+		fontWeight: "400",
+		"&.job-type": {
+			background: "linear-gradient(90deg, #FF9966, #FF5E62)",
+			color: "transparent",
+			"-webkit-background-clip": "text",
+			"-webkit-text-fill-color": "transparent",
+		},
+	},
+});
+
+export const ModalDescription = styled(Dialog.Description, {
+	width: "100%",
+	height: "340px",
+});
+
+export const ModalTabRoot = styled(Tabs.Root, {
+	width: "100%",
+	height: "fit-content",
+});
+
+export const ModalTabList = styled(Tabs.List, {
+	width: "100%",
+	height: "fit-content",
+});
+
+export const MotalTabContent = styled(Tabs.Content, {
+	width: "100%",
+	height: "fit-content",
+});
+
+export const ModalTabTrigger = styled(Tabs.Trigger, {
+	cursor: "pointer",
+	outline: "none",
+	outlineColor: "unset",
+	"&:focus": {
+		outline: "none",
+	},
+	'&[data-state="active"]': {
+		"&::before": {
+			background: "var(--color-base-primary)",
+		},
+	},
 });
