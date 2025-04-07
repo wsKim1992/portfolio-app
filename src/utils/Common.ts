@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, type MouseEvent, type SetStateAction } from "react";
 
 import { type TSubNav } from "@typings/Common";
 
@@ -104,7 +104,7 @@ export const setIndexCB = ({
 	direction: "left" | "right";
 	setIndex: Dispatch<SetStateAction<number>>;
 	maxLength: number;
-}) => {
+}): void => {
 	setIndex(prev => {
 		const nextPrev = direction === "left" ? prev - 1 : prev + 1;
 		if (nextPrev < 0 || nextPrev > maxLength) {

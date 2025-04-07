@@ -1,34 +1,24 @@
-import { Dialog, Text } from "@radix-ui/themes";
+import { Text } from "@radix-ui/themes";
 
 import Slider from "@components/Slider";
-import {
-	ModalButton,
-	ModalConTent,
-	ModalDescription,
-	ModalTitle,
-} from "@components/experiences/Common.style";
 import ContributionDetailBox from "@components/experiences/ContributionDetailBox";
+import DialogContent from "@components/experiences/DialogContent";
 
 const Contribution = () => {
 	return (
-		<ModalConTent
-			maxWidth={"850px"}
-			css={{ height: "calc(100dvh - 10px)" }}
-		>
-			<ModalTitle>
+		<DialogContent
+			HeaderComp={
 				<Text className="project-title">성과 (Contribution)</Text>
-			</ModalTitle>
-			<ModalDescription as={"div"} css={{ width: "100%" }}>
-				<Slider>
-					<ContributionDetailBox />
-					<ContributionDetailBox />
-					<ContributionDetailBox />
-				</Slider>
-			</ModalDescription>
-			<Dialog.Close>
-				<ModalButton>Close</ModalButton>
-			</Dialog.Close>
-		</ModalConTent>
+			}
+			descriptionCss={{ width: "100%" }}
+			outerCss={{ height: "calc(100dvh - 10px)" }}
+		>
+			<Slider>
+				<ContributionDetailBox />
+				<ContributionDetailBox />
+				<ContributionDetailBox />
+			</Slider>
+		</DialogContent>
 	);
 };
 

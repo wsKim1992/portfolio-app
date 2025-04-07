@@ -54,13 +54,12 @@ const Slider: FC<SliderProps> = ({ children }) => {
 			_evt: MouseEvent;
 			direction: "left" | "right";
 		}>({
-			cb: ({ _evt: _, direction }) => {
-				setIndex(prev => {
-					const nextPrev = direction === "left" ? prev - 1 : prev + 1;
-					if (nextPrev < 0 || nextPrev > slideItems.length - 1) {
-						return prev;
-					}
-					return nextPrev;
+			cb: (data: { _evt: MouseEvent; direction: "left" | "right" }) => {
+				setIndexCB({
+					_evt: data._evt,
+					direction: data.direction,
+					setIndex,
+					maxLength: slideItems.length - 1,
 				});
 			},
 			delay: 300,
