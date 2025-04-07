@@ -27,6 +27,7 @@ import {
 import Contribution from "@components/experiences/Contribution";
 import DateRangeComponent from "@components/experiences/DateRangeComponent";
 import DetailDialogContent from "@components/experiences/DetailDialog";
+import TechStacks from "@components/experiences/TechStacks";
 
 import TCTPaSSImg0 from "@assets/img/project/TCP_Pass_0.png";
 
@@ -87,7 +88,7 @@ const BriefInfo = () => {
 					<Dialog.Trigger>
 						<ModalButton>Tech Stacks</ModalButton>
 					</Dialog.Trigger>
-					<DetailDialogContent />
+					<TechStacks />
 				</ModalRoot>
 			</ProjectButtonBox>
 		</ProjectFlipper>

@@ -67,6 +67,7 @@ const Slider: FC<SliderProps> = ({ children }) => {
 		throttleRef.current = throttle;
 		return () => {
 			cancelThrottle();
+			throttleRef.current = null;
 		};
 	}, []);
 
