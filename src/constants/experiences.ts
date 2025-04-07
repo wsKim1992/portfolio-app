@@ -10,5 +10,5 @@ export const detailTabName: TDetailTabName = {
 	description: "프로젝트 개요",
 	role: "담당 역할",
 	contribution: "성과",
-	"tech-stacks": "Tech Stacks",
+	techStacks: "Tech Stacks",
 };

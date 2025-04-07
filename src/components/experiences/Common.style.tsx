@@ -1,4 +1,5 @@
-import { Box, Dialog, Flex, Tabs, Text } from "@radix-ui/themes";
+import * as Collapsible from "@radix-ui/react-collapsible";
+import { Box, Button, Dialog, Flex, Tabs, Text } from "@radix-ui/themes";
 import { styled } from "@stitches/react";
 
 import { StyledButton, Title } from "@components/Common.style";
@@ -202,20 +203,12 @@ export const InnerDomainBox = styled(Box, {
 	padding: "2px 0px",
 });
 
-export const Domain = styled(DateStr, {
-	marginLeft: "2.5px",
-	background:
-		"linear-gradient(var(--color-base-background),var(--color-base-background)) padding-box ,linear-gradient(to left, var(--color-base-primary), var(--color-base-border)) border-box",
-	border: "2px solid transparent",
-	color: "var(--color-base-text)",
-	"-webkit-text-fill-color": "var(--color-base-primary)",
-	fontSize: "1.15rem",
-});
-
-export const ContributionBox = styled(Flex, {
+export const ProjectButtonBox = styled(Flex, {
 	display: "flex",
 	width: "100%",
+	flex: "1",
 	flexDirection: "column",
+	alignItems: "center",
 	gap: "18.5px",
 	listStyleImage: "url(/static/img/project/check.svg)",
 	margin: "0px",
@@ -256,6 +249,13 @@ export const ModalRoot = styled(Dialog.Root, {
 	background: "var(--color-base-background)",
 });
 
+export const ModalConTent = styled(Dialog.Content, {
+	display: "flex",
+	flexDirection: "column",
+	width: "850px",
+	height: "750px",
+});
+
 export const ModalTitleContentBox = styled(Flex, {
 	width: "100%",
 	flexDirection: "row",
@@ -264,7 +264,7 @@ export const ModalTitleContentBox = styled(Flex, {
 	gap: "0.45rem",
 	".sub-title": {
 		flexShrink: "0",
-		fontSize: "1.2rem",
+		fontSize: "0.95rem",
 		fontWeight: "400",
 	},
 });
@@ -288,9 +288,18 @@ export const AttendInfoBox = styled(Flex, {
 	},
 });
 
+export const Domain = styled(AttendInfoBox, {
+	marginLeft: "2.5px",
+	background:
+		"linear-gradient(var(--color-base-background),var(--color-base-background)) padding-box ,linear-gradient(to left, var(--color-base-primary), var(--color-base-border)) border-box",
+	border: "2px solid transparent",
+	color: "var(--color-base-text)",
+	"-webkit-text-fill-color": "var(--color-base-primary)",
+	display: "inline-block",
+});
 export const ModalDescription = styled(Dialog.Description, {
 	width: "100%",
-	height: "340px",
+	flex: "1",
 });
 
 export const ModalTabRoot = styled(Tabs.Root, {
@@ -312,6 +321,8 @@ export const ModalTabTrigger = styled(Tabs.Trigger, {
 	cursor: "pointer",
 	outline: "none",
 	outlineColor: "unset",
+	fontSize: "0.95rem",
+	fontWeight: "400",
 	"&:focus": {
 		outline: "none",
 	},
@@ -320,4 +331,120 @@ export const ModalTabTrigger = styled(Tabs.Trigger, {
 			background: "var(--color-base-primary)",
 		},
 	},
+});
+
+export const ModalTabContent = styled(Tabs.Content, {
+	width: "100%",
+	padding: "10px",
+	boxSizing: "border-box",
+	height: "100%",
+	overflow: "hidden",
+	overflowY: "auto",
+});
+
+export const RoleBox = styled(Flex, {
+	flexDirection: "column",
+	width: "100%",
+	height: "fit-content",
+	gap: "10px",
+	flex: "1",
+	minHeight: "0px",
+	overflow: "hidden",
+	overflowY: "auto",
+});
+
+export const ModalContentTitle = styled(Title, {
+	fontSize: "0.95rem",
+	fontWeight: "500",
+	color: "var(--color-base-text)",
+});
+
+export const ContributionInRole = styled(Box, {
+	width: "100%",
+	height: "fit-content",
+});
+
+export const CollapseRoot = styled(Collapsible.Root, {});
+
+export const CollapseTrigger = styled(Collapsible.Trigger, {
+	width: "100%",
+	padding: "10px",
+	fontSize: "0.95rem",
+	boxSizing: "border-box",
+	"&:focus": {
+		outline: "none",
+	},
+});
+
+export const TriggerFlex = styled(Flex, {
+	flexDirection: "row",
+	alignItems: "center",
+	justifyContent: "space-between",
+	width: "100%",
+	height: "fit-content",
+});
+
+export const CollapseArrowBtn = styled(Box, {
+	display: "block",
+	width: "fit-content",
+	height: "fit-content",
+	borderRadius: "100%",
+	padding: "5px",
+	boxSizing: "border-box",
+	background: "var(--color-base-background)",
+	cursor: "pointer",
+	"&:focus": {
+		outline: "none",
+	},
+});
+
+export const CollapseContent = styled(Collapsible.Content, {
+	width: "100%",
+	height: "fit-content",
+	padding: "10px",
+	boxSizing: "border-box",
+	outline: "none",
+	"&::focus": {
+		outline: "none",
+	},
+});
+
+export const ContentFlex = styled(Flex, {
+	flexDirection: "column",
+	gap: "9.5px",
+	width: "100%",
+	".description": {
+		fontSize: "0.95rem",
+		fontWeight: "400",
+		width: "100%",
+		whiteSpace: "pre-wrap",
+	},
+});
+
+export const ContriTabRoot = styled(Tabs.Root, {
+	width: "100%",
+	height: "100%",
+	display: "flex",
+});
+
+export const ContributeDetail = styled(Flex, {
+	display: "flex",
+	flexDirection: "column",
+	gap: "12.5px",
+	height: "100%",
+	width: "100%",
+	overflow: "hidden",
+	overflowX: "auto",
+	".title": {
+		fontSize: "1.05rem",
+		fontWeight: "500",
+		width: "100%",
+	},
+});
+
+export const ContributeDataBox = styled(Box, {
+	width: "100%",
+	display: "grid",
+	gridTemplateColumns: "repeat(2,1fr)",
+	gap: "10.5px",
 });

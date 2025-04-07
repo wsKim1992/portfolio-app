@@ -55,19 +55,11 @@ ul {
 }
 
 li {
-	margin-bottom: 0.5rem;
+	margin-bottom: 0px;
 }
 button::focused {
 	border: none;
 	outline: none;
-}
-/* Radix UI 스타일 */
-[data-state="open"] {
-	animation: fadeIn 0.2s ease-out;
-}
-
-[data-state="closed"] {
-	animation: fadeOut 0.2s ease-in;
 }
 
 @keyframes fadeIn {

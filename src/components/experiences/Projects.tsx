@@ -8,8 +8,6 @@ import { Title } from "@components/Common.style";
 import {
 	BriefInfoFlex,
 	BriefInfoTitle,
-	ContributionBox,
-	ContributionLI,
 	DescripttionBox,
 	Domain,
 	DomainBox,
@@ -17,6 +15,7 @@ import {
 	ModalButton,
 	ModalRoot,
 	ProjectBox,
+	ProjectButtonBox,
 	ProjectCard,
 	ProjectCardSlider,
 	ProjectFlipper,
@@ -25,6 +24,7 @@ import {
 	ProjectInner,
 	ProjectTitle,
 } from "@components/experiences/Common.style";
+import Contribution from "@components/experiences/Contribution";
 import DateRangeComponent from "@components/experiences/DateRangeComponent";
 import DetailDialogContent from "@components/experiences/DetailDialog";
 
@@ -64,54 +64,32 @@ const Period = () => {
 	);
 };
 
-const Contribution = () => {
-	return (
-		<BriefInfoFlex
-			css={{
-				flexDirection: "column",
-				justifyContent: "flex-start",
-				alignItems: "initial",
-				flex: "1",
-			}}
-		>
-			<BriefInfoTitle css={{ textAlign: "left" }}>
-				# 주요 성과{" "}
-			</BriefInfoTitle>
-			<ContributionBox as="ul">
-				<ContributionLI as="li">
-					Tree-Sitter 적용을 하여, Syntax Highlighting 성능 최적화 및
-					language server 구현.
-				</ContributionLI>
-				<ContributionLI as="li">
-					Tree-Sitter 적용을 하여, Syntax Highlighting 성능 최적화 및
-					language server 구현.
-				</ContributionLI>
-				<ContributionLI as="li">
-					Tree-Sitter 적용을 하여, Syntax Highlighting 성능 최적화 및
-					language server 구현.
-				</ContributionLI>
-				<ContributionLI as="li">
-					Tree-Sitter 적용을 하여, Syntax Highlighting 성능 최적화 및
-					language server 구현.
-				</ContributionLI>
-			</ContributionBox>
-		</BriefInfoFlex>
-	);
-};
-
 const BriefInfo = () => {
 	return (
 		<ProjectFlipper className="flip-back">
 			<ProjectTitle as="h4">#Brief Info</ProjectTitle>
 			<Period />
 			<DomainComponent />
-			<Contribution />
-			<ModalRoot>
-				<Dialog.Trigger>
-					<ModalButton>To Detail</ModalButton>
-				</Dialog.Trigger>
-				<DetailDialogContent />
-			</ModalRoot>
+			<ProjectButtonBox>
+				<ModalRoot>
+					<Dialog.Trigger>
+						<ModalButton>상세</ModalButton>
+					</Dialog.Trigger>
+					<DetailDialogContent />
+				</ModalRoot>
+				<ModalRoot>
+					<Dialog.Trigger>
+						<ModalButton>성과</ModalButton>
+					</Dialog.Trigger>
+					<Contribution />
+				</ModalRoot>
+				<ModalRoot>
+					<Dialog.Trigger>
+						<ModalButton>Tech Stacks</ModalButton>
+					</Dialog.Trigger>
+					<DetailDialogContent />
+				</ModalRoot>
+			</ProjectButtonBox>
 		</ProjectFlipper>
 	);
 };

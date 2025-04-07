@@ -12,7 +12,7 @@ export type TDetailTabVal =
 	| "description"
 	| "role"
 	| "contribution"
-	| "tech-stacks";
+	| "techStacks";
 
 export type TDetailTabName = {
 	readonly [key in TDetailTabVal]: string;

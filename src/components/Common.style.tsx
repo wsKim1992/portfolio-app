@@ -236,3 +236,51 @@ export const HashTagContainer = styled(Box, {
 		zIndex: -1,
 	},
 });
+
+export const SliderBox = styled(Flex, {
+	flexDirection: "row",
+	gap: "10.5px",
+	minWidth: "0px",
+	width: "100%",
+	height: "100%",
+	alignItems: "center",
+});
+
+export const ArrowButton = styled(Button, {
+	padding: "5px",
+	width: "35px",
+	height: "35px",
+	boxSizing: "border-box",
+	borderRadius: "30px",
+	cursor: "pointer",
+	transition: "background 0.56s",
+	background:
+		"linear-gradient(to left,var(--color-base-primary),var(--color-base-secondary))",
+	fontSize: "18.5px",
+	".icon": {
+		width: "18.5px",
+		height: "18.5px",
+		fontWeight: "bold",
+		color: "var(--color-base-background)",
+	},
+	"&:focus": { outline: "none" },
+	"&:hover": {
+		background:
+			"linear-gradient(to left,var(--color-base-secondary),var(--color-base-primary))",
+	},
+});
+
+export const SliderComponent = styled(Box, {
+	overflow: "hidden",
+	overflowX: "auto",
+	width: "100%",
+	height: "100%",
+	display: "block",
+	whiteSpace: "nowrap",
+});
+
+export const SliderItemBox = styled(Box, {
+	display: "inline-block",
+	width: "100%",
+	height: "100%",
+});

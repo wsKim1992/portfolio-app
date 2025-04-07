@@ -74,6 +74,7 @@ export const introObserverFactory = ({
 	const options: IntersectionObserverInit = {
 		root: rootElem,
 		rootMargin: "0px",
+		threshold: 0.15,
 	};
 	return observerFactory({ cb, options });
 };
