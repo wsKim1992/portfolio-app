@@ -1,5 +1,5 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { Box, Button, Dialog, Flex, Tabs, Text } from "@radix-ui/themes";
+import { Box, Dialog, Flex, Tabs, Text } from "@radix-ui/themes";
 import { styled } from "@stitches/react";
 
 import { StyledButton, Title } from "@components/Common.style";
@@ -305,6 +305,8 @@ export const ModalDescription = styled(Dialog.Description, {
 export const ModalTabRoot = styled(Tabs.Root, {
 	width: "100%",
 	height: "fit-content",
+	display: "flex",
+	flexDirection: "column",
 });
 
 export const ModalTabList = styled(Tabs.List, {
@@ -340,6 +342,7 @@ export const ModalTabContent = styled(Tabs.Content, {
 	height: "100%",
 	overflow: "hidden",
 	overflowY: "auto",
+	flex: "1",
 });
 
 export const RoleBox = styled(Flex, {
@@ -447,4 +450,95 @@ export const ContributeDataBox = styled(Box, {
 	display: "grid",
 	gridTemplateColumns: "repeat(2,1fr)",
 	gap: "10.5px",
+});
+
+export const TechStackBox = styled(Box, {
+	display: "grid",
+	gridTemplateColumns: "repeat(auto-fit,minmax(75px,1fr))",
+	gap: "10px",
+	padding: "10.5px",
+	boxSizing: "border-box",
+	width: "100%",
+	height: "100%",
+	overflow: "hidden",
+});
+
+export const TechStackIconBox = styled(Box, {
+	width: "75px",
+	height: "75px",
+	borderRadius: "50%",
+	position: "relative",
+	background: "#fff",
+	cursor: "pointer",
+	zIndex: "0",
+	padding: "5px",
+	overflow: "hidden",
+	".src-img": {
+		display: "block",
+		width: "100%",
+		height: "100%",
+		objectFit: "cover",
+	},
+	"&::before": {
+		position: "absolute",
+		zIndex: "-1",
+		top: "0px",
+		left: "0px",
+		opacity: "0",
+		content: "",
+		padding: "5px",
+		borderRadius: "50%",
+		transition: "transform 1s linear, opacity 0.3s ease-in",
+		transform: "rotate(0deg)",
+		inset: "0",
+		background:
+			"conic-gradient(var(--color-base-primary),var(--color-base-secondary),var(--color-base-background),var(--color-base-primary))",
+		"-webkit-mask":
+			"radial-gradient(farthest-side, transparent calc(100% - 5px), black calc(100% - 5px))",
+		mask: "radial-gradient(farthest-side, transparent calc(100% - 5px), black calc(100% - 5px))",
+	},
+	"&:hover::before": {
+		opacity: "1",
+		transform: "rotate(360deg)",
+	},
+	"&.disable": {
+		filter: "blur(1.5rem)",
+		"&:hover::before": {
+			opacity: "0",
+		},
+	},
+});
+
+export const HoverDescription = styled(Flex, {
+	width: "250px",
+	maxWidth: "450px",
+	borderRadius: "15.5px",
+	padding: "10px",
+	boxSizing: "border-box",
+	fontSize: "0.95rem",
+	fontWeight: "500",
+	pointerEvents: "none",
+	opacity: "0",
+	color: "var(--color-base-background)",
+	background: "var(--color-dark-primary)",
+	transition: "transform 0.7s ease , opacity 0.4",
+	transform: "translate(-50%, -50%)",
+	position: "fixed",
+	display: "flex",
+	flexDirection: "column",
+	zIndex: "2",
+	gap: "10px",
+	".title": {
+		margin: "0px",
+		fontSize: "inherit",
+		fontWeight: "inherit",
+		whiteSpace: "pre-wrap",
+		borderBottom: "1px solid var(--color-base-background)",
+	},
+	".description": {
+		margin: "0px",
+		fontSize: "inherit",
+		fontWeight: "inherit",
+		whiteSpace: "pre-wrap",
+	},
 });

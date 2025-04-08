@@ -244,6 +244,9 @@ export const SliderBox = styled(Flex, {
 	width: "100%",
 	height: "100%",
 	alignItems: "center",
+	"-webkit-scrollbar": {
+		display: "none",
+	},
 });
 
 export const ArrowButton = styled(Button, {
@@ -277,6 +280,7 @@ export const SliderComponent = styled(Box, {
 	height: "100%",
 	display: "block",
 	whiteSpace: "nowrap",
+	"-webkit-scrollbar": { display: "none" },
 });
 
 export const SliderItemBox = styled(Box, {
