@@ -57,19 +57,19 @@ const TechStackGrid: FC<TechStackGridPropps> = ({ value }) => {
 	const ref = useRef<HTMLDivElement | null>(null);
 	const onMouseMove = useCallback(
 		(evt: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
-			if (info && ref.current) {
+			if (ref.current) {
 				handleMouseEnter({ elem: ref.current })(evt);
 			}
 		},
-		[info]
+		[]
 	);
 	const onMouseEnter = useCallback(
 		(evt: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
-			if (info) {
+			if (ref.current) {
 				handleMouseEnter({ elem: ref.current })(evt);
 			}
 		},
-		[info]
+		[]
 	);
 
 	return (
