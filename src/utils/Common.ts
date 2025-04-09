@@ -1,4 +1,9 @@
-import { type Dispatch, type MouseEvent, type SetStateAction } from "react";
+import {
+	type Dispatch,
+	type MouseEvent,
+	type SetStateAction,
+	type UIEvent,
+} from "react";
 
 import { type TSubNav } from "@typings/Common";
 
@@ -99,17 +104,184 @@ export const setIndexCB = ({
 	direction,
 	setIndex,
 	maxLength,
+	parentElem,
 }: {
 	_evt: MouseEvent;
 	direction: "left" | "right";
 	setIndex: Dispatch<SetStateAction<number>>;
 	maxLength: number;
+	parentElem: HTMLElement | null;
 }): void => {
 	setIndex(prev => {
 		const nextPrev = direction === "left" ? prev - 1 : prev + 1;
 		if (nextPrev < 0 || nextPrev > maxLength) {
 			return prev;
 		}
+		parentElem && slideByIndex({ parentElem, index: nextPrev });
 		return nextPrev;
 	});
+};
+
+export const getAccumWidth = ({
+	elems,
+}: {
+	elems: Array<HTMLElement | null>;
+}) => {
+	let accumWidth = 0;
+	return elems.map(elem => {
+		const width = elem ? elem.getBoundingClientRect().width : 0;
+		accumWidth += width;
+		return { accumWidth, width };
+	});
+};
+
+export const getParentLeft = ({ elem }: { elem: HTMLElement }) => {
+	return elem.getBoundingClientRect().left;
+};
+
+const isValid = ({
+	scrollLeft,
+	width,
+}: {
+	scrollLeft: number;
+	width: { accumWidth: number; width: number };
+}) => {
+	return scrollLeft <= width.accumWidth - width.width / 2;
+};
+
+export const getIndex = ({
+	scrollLeft,
+	widths,
+}: {
+	scrollLeft: number;
+	widths: { accumWidth: number; width: number }[];
+}) => {
+	let left = 0;
+	let right = widths.length - 1;
+	let ans = right;
+	while (left <= right) {
+		const mid: number = (left + right) / 2;
+		if (isValid({ scrollLeft, width: widths[mid] })) {
+			right = mid - 1;
+			ans = Math.min(ans, mid);
+		} else {
+			left = mid + 1;
+		}
+	}
+	return ans;
+};
+
+export const autoScroll = ({
+	elem,
+	index,
+}: {
+	elem: HTMLElement;
+	index: number;
+}): void => {
+	const {
+		children: { [index]: targetElem },
+	} = elem;
+	const offsetDiff = (targetElem as HTMLElement).offsetLeft - elem.offsetLeft;
+	elem.scrollTo({ left: offsetDiff, behavior: "smooth" });
+};
+
+const clearMouseHandler = ({
+	elem,
+	state,
+	widths,
+	setIndex,
+}: {
+	elem: HTMLElement;
+	state: {
+		isTabbed: boolean;
+		startXAxis: number;
+		startScrollLeft: number;
+	};
+	widths: { accumWidth: number; width: number }[];
+	setIndex: Dispatch<SetStateAction<number>>;
+}) => {
+	const idx = getIndex({ scrollLeft: elem.scrollLeft, widths });
+	autoScroll({ elem, index: idx });
+	setIndex(idx);
+	state.isTabbed = false;
+	state.startXAxis = 0;
+	state.startScrollLeft = 0;
+};
+
+export const dragEventHandler = ({
+	elem,
+	widths,
+	setIndex,
+}: {
+	elem: HTMLElement;
+	widths: { accumWidth: number; width: number }[];
+	setIndex: Dispatch<SetStateAction<number>>;
+}): {
+	onMouseDown: (evt: MouseEvent) => void;
+	onMouseMove: (evt: MouseEvent) => void;
+	onMouseUp: (evt: MouseEvent) => void;
+	onMouseLeave: (evt: MouseEvent) => void;
+} => {
+	const state: {
+		isTabbed: boolean;
+		startXAxis: number;
+		startScrollLeft: number;
+	} = {
+		isTabbed: false,
+		startXAxis: 0,
+		startScrollLeft: 0,
+	};
+	return {
+		onMouseDown: (evt: MouseEvent) => {
+			state.startXAxis = evt.clientX;
+			state.startScrollLeft = elem.scrollLeft;
+			state.isTabbed = true;
+		},
+		onMouseMove: (evt: MouseEvent) => {
+			if (state.isTabbed) {
+				const { clientX } = evt;
+				const diff = -(clientX - state.startXAxis);
+				elem.scrollTo({
+					left: state.startScrollLeft + diff,
+					behavior: "smooth",
+				});
+			}
+		},
+		onMouseUp: (_evt: MouseEvent) => {
+			clearMouseHandler({
+				elem,
+				widths,
+				state,
+				setIndex,
+			});
+		},
+		onMouseLeave: (_evt: MouseEvent) => {
+			clearMouseHandler({
+				elem,
+				widths,
+				state,
+				setIndex,
+			});
+		},
+	};
+};
+
+export const handleScrollSlide = ({
+	elem,
+	setIndex,
+	widths,
+}: {
+	elem: HTMLElement;
+	setIndex: Dispatch<SetStateAction<number>>;
+	widths: { accumWidth: number; width: number }[];
+}) => {
+	let timer: ReturnType<typeof setTimeout> | null = null;
+	return (_evt: UIEvent<HTMLElement>) => {
+		if (timer !== null) clearTimeout(timer);
+		timer = setTimeout(() => {
+			const { scrollLeft } = elem;
+			const index = getIndex({ scrollLeft, widths });
+			setIndex(index);
+		}, 250);
+	};
 };

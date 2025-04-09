@@ -271,6 +271,13 @@ export const ArrowButton = styled(Button, {
 		background:
 			"linear-gradient(to left,var(--color-base-secondary),var(--color-base-primary))",
 	},
+	"&.disabled": {
+		background:
+			"linear-gradient(to left, gray, var(--color-base-background));",
+		"&:hover": {
+			background: "inherited",
+		},
+	},
 });
 
 export const SliderComponent = styled(Box, {
@@ -280,11 +287,16 @@ export const SliderComponent = styled(Box, {
 	height: "100%",
 	display: "block",
 	whiteSpace: "nowrap",
-	"-webkit-scrollbar": { display: "none" },
+	userSelect: "none",
+	"scrollbar-width": "none",
+	scrollSnapType: "x mandatory",
+	scrollBehavior: "smooth",
+	"-webkit-overflow-scrolling": "touch",
 });
 
 export const SliderItemBox = styled(Box, {
 	display: "inline-block",
 	width: "100%",
 	height: "100%",
+	scrollSnapAlign: "start",
 });
