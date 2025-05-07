@@ -87,12 +87,12 @@ export const throttleFn = <T extends object | string | number | UIEvent>({
 			lastTime = now;
 			cb(...args);
 		} else if (!timeoutHandler) {
-			lastTime = now;
 			timeoutHandler = setTimeout(() => {
 				timeoutHandler = null;
 				if (lastArgs) {
 					cb(...lastArgs);
 				}
+				lastTime = now;
 			}, timeLeft);
 		}
 	};
@@ -221,6 +221,8 @@ export const dragEventHandler = ({
 	onMouseMove: (evt: MouseEvent) => void;
 	onMouseUp: (evt: MouseEvent) => void;
 	onMouseLeave: (evt: MouseEvent) => void;
+	slideByIdx: (index: number) => void;
+	handleScrollSlide: (_evt: UIEvent<HTMLElement>) => void;
 } => {
 	const state: {
 		isTabbed: boolean;
@@ -231,22 +233,35 @@ export const dragEventHandler = ({
 		startXAxis: 0,
 		startScrollLeft: 0,
 	};
+	const { throttle, cancel } = throttleFn({
+		cb: (evt: MouseEvent) => {
+			if (state.isTabbed) {
+				const { clientX } = evt;
+				const { startXAxis, startScrollLeft } = state;
+				const diff = -(clientX - startXAxis);
+				elem.scrollTo({
+					left: startScrollLeft + diff,
+					behavior: "smooth",
+				});
+			}
+		},
+		delay: 32,
+	});
+	let timer: null | ReturnType<typeof setTimeout> = null;
 	return {
+		slideByIdx: index => {
+			state.isTabbed = true;
+			autoScroll({ elem, index });
+			setTimeout(() => {
+				state.isTabbed = false;
+			}, 100);
+		},
 		onMouseDown: (evt: MouseEvent) => {
 			state.startXAxis = evt.clientX;
 			state.startScrollLeft = elem.scrollLeft;
 			state.isTabbed = true;
 		},
-		onMouseMove: (evt: MouseEvent) => {
-			if (state.isTabbed) {
-				const { clientX } = evt;
-				const diff = -(clientX - state.startXAxis);
-				elem.scrollTo({
-					left: state.startScrollLeft + diff,
-					behavior: "smooth",
-				});
-			}
-		},
+		onMouseMove: throttle,
 		onMouseUp: (_evt: MouseEvent) => {
 			clearMouseHandler({
 				elem,
@@ -254,6 +269,7 @@ export const dragEventHandler = ({
 				state,
 				setIndex,
 			});
+			cancel();
 		},
 		onMouseLeave: (_evt: MouseEvent) => {
 			clearMouseHandler({
@@ -262,26 +278,125 @@ export const dragEventHandler = ({
 				state,
 				setIndex,
 			});
+			cancel();
+		},
+		handleScrollSlide: (_evt: UIEvent<HTMLElement>) => {
+			if (!state.isTabbed) {
+				if (timer !== null) clearTimeout(timer);
+				timer = setTimeout(() => {
+					const { scrollLeft } = elem;
+					const index = getIndex({ scrollLeft, widths });
+					setIndex(index);
+				}, 250);
+			}
 		},
 	};
 };
 
-export const handleScrollSlide = ({
+export const getMaximumToShow = ({
 	elem,
-	setIndex,
-	widths,
+	total,
 }: {
 	elem: HTMLElement;
-	setIndex: Dispatch<SetStateAction<number>>;
-	widths: { accumWidth: number; width: number }[];
-}) => {
-	let timer: ReturnType<typeof setTimeout> | null = null;
-	return (_evt: UIEvent<HTMLElement>) => {
-		if (timer !== null) clearTimeout(timer);
-		timer = setTimeout(() => {
-			const { scrollLeft } = elem;
-			const index = getIndex({ scrollLeft, widths });
-			setIndex(index);
-		}, 250);
+	total: number;
+}): number => {
+	const { maxWidth, gap } = getComputedStyle(elem);
+	const pxRegEx = new RegExp(/^\d+px$/);
+	const maxWidthVal =
+		maxWidth && pxRegEx.test(maxWidth)
+			? Number(maxWidth.split("px")[0]) / total
+			: 0;
+	const gapVal = gap && pxRegEx.test(gap) ? Number(gap.split("px")[0]) : 0;
+	if (maxWidthVal) {
+		const li = elem.querySelector("li");
+		if (li) {
+			const liWidth = li.getBoundingClientRect().width;
+			return (liWidth + gapVal) * 5;
+		}
+	}
+	return 0;
+};
+
+const convertPXIntoNum = (px: string): number => {
+	const pxRegEx = new RegExp(/^\d+(\.\d+)?px$/);
+	return pxRegEx.test(px) ? Number(px.split("px")[0]) : 0;
+};
+
+export const computeSlideData = ({
+	elem,
+}: {
+	elem: HTMLElement;
+}): {
+	liWidth: number;
+	middle: number;
+} => {
+	const { maxWidth, padding } = getComputedStyle(elem);
+	if (maxWidth) {
+		const maxWidthNum = convertPXIntoNum(maxWidth);
+		const paddingNum = convertPXIntoNum(padding);
+		const li = elem.querySelector("li");
+		if (li) {
+			const { width, marginLeft } = getComputedStyle(li);
+			return {
+				liWidth: convertPXIntoNum(width) + convertPXIntoNum(marginLeft),
+				middle: (maxWidthNum - paddingNum * 2) / 2,
+			};
+		}
+		return {
+			liWidth: 0,
+			middle: maxWidthNum / 2,
+		};
+	}
+	return {
+		liWidth: 0,
+		middle: 0,
 	};
+};
+
+export const dotBoxSlide = ({
+	elem,
+	slideData,
+	index,
+}: {
+	elem: HTMLElement;
+	slideData: {
+		liWidth: number;
+		middle: number;
+	};
+	index: number;
+}) => {
+	const { liWidth, middle } = slideData;
+	const offset = liWidth * index;
+	console.log({ offset });
+	console.log({ middle });
+	if (offset >= middle) {
+		console.log({ offset });
+		elem.scrollTo({ left: offset + middle });
+	} else {
+		elem.scrollTo({ left: offset - middle });
+	}
+};
+
+export const handleClickLi = ({
+	elem,
+	slideData,
+	index,
+	slideByIdx,
+}: {
+	elem: HTMLElement;
+	slideData: {
+		liWidth: number;
+		middle: number;
+	};
+	index: number;
+	slideByIdx: (index: number) => void;
+}) => {
+	dotBoxSlide({
+		elem,
+		slideData,
+		index,
+	});
+	setTimeout(() => {
+		slideByIdx && slideByIdx(index);
+	}, 1000);
 };

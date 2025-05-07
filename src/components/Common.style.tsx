@@ -247,6 +247,7 @@ export const SliderBox = styled(Flex, {
 	"-webkit-scrollbar": {
 		display: "none",
 	},
+	position: "relative",
 });
 
 export const ArrowButton = styled(Button, {
@@ -299,4 +300,41 @@ export const SliderItemBox = styled(Box, {
 	width: "100%",
 	height: "100%",
 	scrollSnapAlign: "start",
+});
+
+export const SliderDotBox = styled(Flex, {
+	position: "absolute",
+	bottom: "10px",
+	left: "0px",
+	width: "inherit",
+	height: "fit-content",
+	flexDirection: "row",
+	alignItems: "center",
+	justifyContent: "center",
+	".dots": {
+		"scrollbar-width": "none",
+		overflow: "hidden",
+		overflowX: "auto",
+		background:
+			"linear-gradient(to left,var(--color-base-background),var(--color-base-primary))",
+		boxShadow: "0 0 2px 3px var(--color-base-border)",
+		maxWidth: "100px",
+		borderRadius: "12px",
+		padding: "9.5px",
+		boxSizing: "border-box",
+		margin: "0px",
+		whiteSpace: "nowrap",
+		li: {
+			display: "inline-block",
+			width: "8px",
+			marginLeft: "8px",
+			height: "8px",
+			borderRadius: "100%",
+			background: "var(--color-base-background)",
+			cursor: "pointer",
+			"&.now": {
+				background: "#ffb33a",
+			},
+		},
+	},
 });

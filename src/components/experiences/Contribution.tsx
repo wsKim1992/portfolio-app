@@ -17,6 +17,10 @@ const Contribution = () => {
 				<ContributionDetailBox />
 				<ContributionDetailBox />
 				<ContributionDetailBox />
+				<ContributionDetailBox />
+				<ContributionDetailBox />
+				<ContributionDetailBox />
+				<ContributionDetailBox />
 			</Slider>
 		</DialogContent>
 	);

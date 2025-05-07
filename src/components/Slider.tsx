@@ -1,11 +1,13 @@
 import {
 	Children,
+	Dispatch,
 	type FC,
 	type MouseEvent,
 	type ReactNode,
-	type UIEvent,
+	SetStateAction,
+	createContext,
 	forwardRef,
-	useCallback,
+	useContext,
 	useEffect,
 	useMemo,
 	useRef,
@@ -13,13 +15,13 @@ import {
 } from "react";
 
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import { Box } from "@radix-ui/themes";
 
 import {
-	debounceFn,
+	computeSlideData,
 	dragEventHandler,
 	getAccumWidth,
-	getParentLeft,
-	handleScrollSlide,
+	handleClickLi,
 	setIndexCB,
 	throttleFn,
 } from "@utils/Common";
@@ -28,6 +30,7 @@ import {
 	ArrowButton,
 	SliderBox,
 	SliderComponent,
+	SliderDotBox,
 	SliderItemBox,
 } from "@components/Common.style";
 
@@ -37,6 +40,55 @@ type SliderProps = {
 
 type SliderItemProps = {
 	children: ReactNode;
+};
+
+const Context = createContext<{
+	index: number;
+	setIndex?: Dispatch<SetStateAction<number>>;
+}>({ index: 0 });
+
+const SliderDots: FC<{
+	total: number;
+	slideByIdx?: (index: number) => void;
+}> = ({ total, slideByIdx }) => {
+	const { index } = useContext(Context);
+	const ref = useRef<HTMLDivElement>(null);
+	const [slideData, setSlideData] = useState<{
+		liWidth: number;
+		middle: number;
+	}>({ liWidth: 0, middle: 0 });
+	useEffect(() => {
+		if (ref.current) {
+			setSlideData(computeSlideData({ elem: ref.current }));
+		}
+	}, []);
+	const handleClick = (idx: number) => {
+		if (ref.current && slideByIdx) {
+			handleClickLi({
+				elem: ref.current,
+				slideData,
+				slideByIdx,
+				index: idx,
+			});
+		}
+	};
+	return (
+		<SliderDotBox>
+			<Box ref={ref} asChild className="dots">
+				<ul>
+					{Array.from({ length: total }).map((_, idx) => (
+						<li
+							onClick={() => {
+								handleClick(idx);
+							}}
+							key={idx}
+							className={index === idx ? "now" : ""}
+						></li>
+					))}
+				</ul>
+			</Box>
+		</SliderDotBox>
+	);
 };
 
 const SliderItem = forwardRef<HTMLDivElement, SliderItemProps>(
@@ -99,70 +151,68 @@ const Slider: FC<SliderProps> = ({ children }) => {
 
 	const dragEventCB = useMemo(() => {
 		if (ref.current && widths) {
-			const { onMouseDown, onMouseMove, onMouseLeave, onMouseUp } =
-				dragEventHandler({
-					elem: ref.current,
-					widths,
-					setIndex,
-				});
-			return {
-				onMouseDown,
-				onMouseMove,
-				onMouseLeave,
-				onMouseUp,
-			};
+			return dragEventHandler({
+				elem: ref.current,
+				widths,
+				setIndex,
+			});
 		}
 	}, [ref.current, widths]);
 
-	const handleScroll = useMemo(() => {
-		if (widths && ref.current) {
-			return handleScrollSlide({ elem: ref.current, setIndex, widths });
-		}
-		return undefined;
-	}, [widths, ref.current]);
-
 	return (
-		<SliderBox>
-			<ArrowButton
-				onClick={(evt: React.MouseEvent) => {
-					throttleRef.current &&
-						throttleRef.current({ _evt: evt, direction: "left" });
-				}}
-				disabled={index <= 0}
-				className={index <= 0 ? "disabled" : ""}
-			>
-				<ArrowLeftIcon className="icon" />
-			</ArrowButton>
-			<SliderComponent
-				ref={ref}
-				onScroll={handleScroll}
-				onMouseDown={dragEventCB?.onMouseDown}
-				onMouseMove={dragEventCB?.onMouseMove}
-				onMouseUp={dragEventCB?.onMouseUp}
-				onMouseLeave={dragEventCB?.onMouseLeave}
-			>
-				{slideItems.map((elem, idx) => (
-					<SliderItem
-						ref={el => {
-							childrenRef.current[idx] = el;
-						}}
-						key={idx}
-					>
-						{elem}
-					</SliderItem>
-				))}
-			</SliderComponent>
-			<ArrowButton
-				onClick={(evt: React.MouseEvent) => {
-					throttleRef.current &&
-						throttleRef.current({ _evt: evt, direction: "right" });
-				}}
-				disabled={index >= slideItems.length - 1}
-				className={index >= slideItems.length - 1 ? "disabled" : ""}
-			>
-				<ArrowRightIcon className="icon" />
-			</ArrowButton>
-		</SliderBox>
+		<Context.Provider value={{ index, setIndex }}>
+			<SliderBox>
+				<ArrowButton
+					onClick={(evt: React.MouseEvent) => {
+						throttleRef.current &&
+							throttleRef.current({
+								_evt: evt,
+								direction: "left",
+							});
+					}}
+					disabled={index <= 0}
+					className={index <= 0 ? "disabled" : ""}
+				>
+					<ArrowLeftIcon className="icon" />
+				</ArrowButton>
+				<SliderComponent
+					ref={ref}
+					onScroll={dragEventCB?.handleScrollSlide}
+					onMouseDown={dragEventCB?.onMouseDown}
+					onMouseMove={dragEventCB?.onMouseMove}
+					onMouseUp={dragEventCB?.onMouseUp}
+					onMouseLeave={dragEventCB?.onMouseLeave}
+				>
+					{slideItems.map((elem, idx) => (
+						<SliderItem
+							ref={el => {
+								childrenRef.current[idx] = el;
+							}}
+							key={idx}
+						>
+							{elem}
+						</SliderItem>
+					))}
+				</SliderComponent>
+				<ArrowButton
+					onClick={(evt: React.MouseEvent) => {
+						throttleRef.current &&
+							throttleRef.current({
+								_evt: evt,
+								direction: "right",
+							});
+					}}
+					disabled={index >= slideItems.length - 1}
+					className={index >= slideItems.length - 1 ? "disabled" : ""}
+				>
+					<ArrowRightIcon className="icon" />
+				</ArrowButton>
+				<SliderDots
+					total={slideItems.length}
+					slideByIdx={dragEventCB?.slideByIdx}
+				/>
+			</SliderBox>
+		</Context.Provider>
 	);
 };
 
