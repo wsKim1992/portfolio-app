@@ -37,6 +37,7 @@ export const CompanyLogoCon = styled(Box, {
 		background: "var(--color-base-secondary)",
 	},
 	overflow: "hidden",
+	flexShrink: "0",
 });
 
 export const CompanyLogo = styled(Box, {
@@ -57,10 +58,13 @@ export const SeperateLine = styled(Box, {
 export const DetailInfo = styled(Flex, {
 	flexDirection: "column",
 	gap: "15.5px",
-	flex: "1",
+	flexShrink: "0",
 	height: "fit-content",
 	padding: "0px 15.5px",
 	boxSizing: "border-box",
+	minWidth: "0px",
+	maxWidth: "100%",
+	overflow: "hidden",
 });
 
 export const DateRange = styled(Flex, {
@@ -162,10 +166,11 @@ export const ProjectImg = styled(Box, {
 	objectFit: "contain",
 	width: "100%",
 	height: "155px",
+	flexShrink: "0",
 });
 
 export const ProjectInfoBox = styled(Box, {
-	flex: "1",
+	flexShrink: "1",
 	width: "100%",
 });
 

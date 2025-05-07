@@ -5,6 +5,7 @@ import { Dialog } from "@radix-ui/themes";
 import { setSliderAnimation } from "@utils/Experiences";
 
 import { Title } from "@components/Common.style";
+import Slider from "@components/Slider";
 import {
 	BriefInfoFlex,
 	BriefInfoTitle,
@@ -17,7 +18,6 @@ import {
 	ProjectBox,
 	ProjectButtonBox,
 	ProjectCard,
-	ProjectCardSlider,
 	ProjectFlipper,
 	ProjectImg,
 	ProjectInfoBox,
@@ -143,10 +143,14 @@ const Projects = () => {
 			<Title as="h4" css={{ margin: "0px", fontSize: "1.6rem" }}>
 				Projects
 			</Title>
-			<ProjectCardSlider>
+			<Slider elementCSS={{ width: "fit-content", marginLeft: "10px" }}>
 				<Project />
 				<Project />
-			</ProjectCardSlider>
+				<Project />
+				<Project />
+				<Project />
+				<Project />
+			</Slider>
 		</ProjectBox>
 	);
 };

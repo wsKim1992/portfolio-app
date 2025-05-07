@@ -16,9 +16,11 @@ import {
 
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Box } from "@radix-ui/themes";
+import { type CSS } from "@stitches/react";
 
 import {
 	computeSlideData,
+	dotBoxSlide,
 	dragEventHandler,
 	getAccumWidth,
 	handleClickLi,
@@ -36,10 +38,12 @@ import {
 
 type SliderProps = {
 	children: ReactNode;
+	elementCSS?: CSS;
 };
 
 type SliderItemProps = {
 	children: ReactNode;
+	elementCSS?: CSS;
 };
 
 const Context = createContext<{
@@ -51,7 +55,7 @@ const SliderDots: FC<{
 	total: number;
 	slideByIdx?: (index: number) => void;
 }> = ({ total, slideByIdx }) => {
-	const { index } = useContext(Context);
+	const { index, setIndex } = useContext(Context);
 	const ref = useRef<HTMLDivElement>(null);
 	const [slideData, setSlideData] = useState<{
 		liWidth: number;
@@ -62,15 +66,18 @@ const SliderDots: FC<{
 			setSlideData(computeSlideData({ elem: ref.current }));
 		}
 	}, []);
-	const handleClick = (idx: number) => {
-		if (ref.current && slideByIdx) {
-			handleClickLi({
+	useEffect(() => {
+		if (ref.current) {
+			dotBoxSlide({
 				elem: ref.current,
 				slideData,
-				slideByIdx,
-				index: idx,
+				index,
 			});
 		}
+	}, [index, slideData]);
+	const handleClick = (idx: number) => {
+		setIndex && setIndex(idx);
+		slideByIdx && slideByIdx(idx);
 	};
 	return (
 		<SliderDotBox>
@@ -92,12 +99,16 @@ const SliderDots: FC<{
 };
 
 const SliderItem = forwardRef<HTMLDivElement, SliderItemProps>(
-	({ children }, ref) => {
-		return <SliderItemBox ref={ref}>{children}</SliderItemBox>;
+	({ children, elementCSS }, ref) => {
+		return (
+			<SliderItemBox css={elementCSS} ref={ref}>
+				{children}
+			</SliderItemBox>
+		);
 	}
 );
 
-const Slider: FC<SliderProps> = ({ children }) => {
+const Slider: FC<SliderProps> = ({ children, elementCSS }) => {
 	const [index, setIndex] = useState<number>(0);
 	const [widths, setWidths] = useState<
 		{ accumWidth: number; width: number }[]
@@ -189,6 +200,7 @@ const Slider: FC<SliderProps> = ({ children }) => {
 								childrenRef.current[idx] = el;
 							}}
 							key={idx}
+							elementCSS={elementCSS}
 						>
 							{elem}
 						</SliderItem>

@@ -128,6 +128,7 @@ export const getAccumWidth = ({
 	elems: Array<HTMLElement | null>;
 }) => {
 	let accumWidth = 0;
+	console.log({ elems });
 	return elems.map(elem => {
 		const width = elem ? elem.getBoundingClientRect().width : 0;
 		accumWidth += width;
@@ -160,8 +161,8 @@ export const getIndex = ({
 	let right = widths.length - 1;
 	let ans = right;
 	while (left <= right) {
-		const mid: number = (left + right) / 2;
-		if (isValid({ scrollLeft, width: widths[mid] })) {
+		const mid: number = Math.floor((left + right) / 2);
+		if (widths[mid] && isValid({ scrollLeft, width: widths[mid] })) {
 			right = mid - 1;
 			ans = Math.min(ans, mid);
 		} else {
@@ -222,7 +223,7 @@ export const dragEventHandler = ({
 	onMouseUp: (evt: MouseEvent) => void;
 	onMouseLeave: (evt: MouseEvent) => void;
 	slideByIdx: (index: number) => void;
-	handleScrollSlide: (_evt: UIEvent<HTMLElement>) => void;
+	handleScrollSlide: (evt: UIEvent<HTMLElement>) => void;
 } => {
 	const state: {
 		isTabbed: boolean;
@@ -235,6 +236,7 @@ export const dragEventHandler = ({
 	};
 	const { throttle, cancel } = throttleFn({
 		cb: (evt: MouseEvent) => {
+			evt.stopPropagation();
 			if (state.isTabbed) {
 				const { clientX } = evt;
 				const { startXAxis, startScrollLeft } = state;
@@ -257,12 +259,14 @@ export const dragEventHandler = ({
 			}, 100);
 		},
 		onMouseDown: (evt: MouseEvent) => {
+			evt.stopPropagation();
 			state.startXAxis = evt.clientX;
 			state.startScrollLeft = elem.scrollLeft;
 			state.isTabbed = true;
 		},
 		onMouseMove: throttle,
-		onMouseUp: (_evt: MouseEvent) => {
+		onMouseUp: (evt: MouseEvent) => {
+			evt.stopPropagation();
 			clearMouseHandler({
 				elem,
 				widths,
@@ -271,7 +275,8 @@ export const dragEventHandler = ({
 			});
 			cancel();
 		},
-		onMouseLeave: (_evt: MouseEvent) => {
+		onMouseLeave: (evt: MouseEvent) => {
+			evt.stopPropagation();
 			clearMouseHandler({
 				elem,
 				widths,
@@ -280,7 +285,8 @@ export const dragEventHandler = ({
 			});
 			cancel();
 		},
-		handleScrollSlide: (_evt: UIEvent<HTMLElement>) => {
+		handleScrollSlide: (evt: UIEvent<HTMLElement>) => {
+			evt.stopPropagation();
 			if (!state.isTabbed) {
 				if (timer !== null) clearTimeout(timer);
 				timer = setTimeout(() => {
@@ -367,13 +373,11 @@ export const dotBoxSlide = ({
 }) => {
 	const { liWidth, middle } = slideData;
 	const offset = liWidth * index;
-	console.log({ offset });
-	console.log({ middle });
 	if (offset >= middle) {
 		console.log({ offset });
-		elem.scrollTo({ left: offset + middle });
+		elem.scrollTo({ left: offset + middle, behavior: "smooth" });
 	} else {
-		elem.scrollTo({ left: offset - middle });
+		elem.scrollTo({ left: offset - middle, behavior: "smooth" });
 	}
 };
 
